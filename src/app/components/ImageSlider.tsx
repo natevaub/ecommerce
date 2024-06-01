@@ -25,7 +25,7 @@ export function ImageSlider({ imagesUrls }: ImageSliderProps) {
   }
 
   return (
-    <div className='w-full h-full relative'>
+    <div className="bg-black w-full h-full relative">
       <img src={imagesUrls[imageIndex]} className="img-slider-img " />
       <button className='img-slider-btn' style={{left: 0}} onClick={showNextImage}>
         <ArrowBigLeft />
@@ -33,7 +33,9 @@ export function ImageSlider({ imagesUrls }: ImageSliderProps) {
       <button className='img-slider-btn' style={{right: 0}} onClick={showPreviousImage}>
         <ArrowBigRight />
       </button>
-    </div>
+
+      </div>
+      
   );
 }
 

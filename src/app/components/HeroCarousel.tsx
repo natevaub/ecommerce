@@ -6,6 +6,7 @@ const CAROUSELS_ASSETS = [
   "/Stratocaster.jpg",
   "/Squier.jpg"
 ];
+
 export default function HeroCarousel() {
   return (
     <div className='img-slider-container' >
