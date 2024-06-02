@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { ArrowBigLeft, ArrowBigRight } from "lucide-react";
-import "../../styles/image-slider.css";
+import "../styles/image-slider.css";
 
 type ImageSliderProps = {
   imagesUrls: string[];

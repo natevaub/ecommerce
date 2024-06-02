@@ -1,6 +1,6 @@
 import React from "react";
 import ImageSlider from "./ImageSlider";
-import "../../styles/image-slider.css";
+import "../styles/image-slider.css";
 
 const CAROUSELS_ASSETS = [
   "/Stratocaster.jpg",

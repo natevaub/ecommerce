@@ -1,6 +1,6 @@
-import MaxWidthWrapper from "./components/MaxWidthWrapper"
-import HeroCarousel from "./components/HeroCarousel";
-import ProductSlider from "./components/ProductSlider";
+import MaxWidthWrapper from "../components/MaxWidthWrapper"
+import HeroCarousel from "../components/HeroCarousel";
+import ProductSlider from "../components/ProductSlider";
 export default function Home() {
   console.log('Hello');
   return (
