@@ -1,5 +1,6 @@
-import { getAllProducts } from "@/actions";
-import { Product } from "@/types/types";
+import { ProductInfo } from "@/types/types";
+import { getAllProducts,  } from "@/actions";
+import { getProductInfo } from "@/actions";
 
 export function DisplayProducts({ products }: { products: Awaited<ReturnType<typeof getAllProducts>>}) {
   return (
@@ -19,14 +20,9 @@ export function DisplayProducts({ products }: { products: Awaited<ReturnType<typ
   );
 }
 
-type ProductSliderProps = {
-  title: string;
-  products: Product[];
-}
-
-export function ProductSlider( {title, products}: {title: string, products: Awaited<ReturnType<typeof getAllProducts>>} ) {
+export function ProductDisplayInfo( {title, products}: {title: string, products: Awaited<ReturnType<typeof getAllProducts>>} ) {
   return (
-    <div className='w-full mt-[3rem] flex-grow'>
+    <div className='w-full mt-[3rem] flex-grow overflow-hidden'>
       <h1 className='uppercase text-4xl'>{title}</h1>
       <div>
         <DisplayProducts products={products}/>
@@ -34,5 +30,34 @@ export function ProductSlider( {title, products}: {title: string, products: Awai
     </div>
   );
 }
+
+
+
+export function DisplayByIdWithImage({ product }: { product: ProductInfo}) {
+  return (
+    <div className="flex flex-col h-[500px] w-[300px] bg-gray-200 items-center gap-[2rem] py-[2rem]">
+      <div className='h-[350px]'>
+        <img src={product.mainImage} alt={product.name} className='object-contain h-full'/>
+      </div>
+      <div className="text-center">
+        <h1>{product.name}</h1>
+        <p>${product.price}</p>
+      </div>
+      
+    </div>
+  );
+}
+
+export function ProductSlider( {title, product}: {title: string, product: ProductInfo} ) {
+  return (
+    <div className='w-full mt-[3rem] flex-grow'>
+      <h1 className='uppercase text-4xl mb-[3rem]'>{title}</h1>
+      <div>
+        <DisplayByIdWithImage product={product}/>
+      </div>
+    </div>
+  );
+}
+
 
 export default ProductSlider;

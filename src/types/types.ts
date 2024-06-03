@@ -12,3 +12,9 @@ export interface Product {
   created_at: string; // Assuming timestamp is returned as string
   updated_at: string; // Assuming timestamp is returned as string
 }
+
+export interface ProductInfo {
+  name: string;
+  price: number;
+  mainImage: string;
+}

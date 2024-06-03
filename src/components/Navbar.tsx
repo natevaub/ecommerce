@@ -50,7 +50,7 @@ const Navbar = () => {
         />
         <div className='text-center w-[250px]'>
           <div>Hamburger menu</div>
-          {/* <div>Finder Dealers</div> */}
+          <div>Sign In</div>
         </div>
       </div>
      {windowWidth >= 1280 && <Category />} 
