@@ -27,7 +27,7 @@ export function ImageSlider({ imagesUrls }: ImageSliderProps) {
 
   return (
     <div className="bg-black w-full h-full relative">
-      <Image src={imagesUrls[imageIndex]} alt='slider image' className="img-slider-img " />
+      <img src={imagesUrls[imageIndex]} alt='slider image' className="img-slider-img " />
       <button className='img-slider-btn' style={{left: 0}} onClick={showNextImage}>
         <ArrowBigLeft />
       </button>
