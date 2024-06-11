@@ -1,6 +1,7 @@
 import { ProductInfo } from "@/types/types";
 import { getAllProducts,  } from "@/actions";
 import { getProductInfo } from "@/actions";
+import Image from "next/image";
 
 export function DisplayProducts({ products }: { products: Awaited<ReturnType<typeof getAllProducts>>}) {
   return (
@@ -37,7 +38,7 @@ export function DisplayByIdWithImage({ product }: { product: ProductInfo}) {
   return (
     <div className="flex flex-col h-[500px] w-[300px] bg-gray-200 items-center gap-[2rem] py-[2rem]">
       <div className='h-[350px]'>
-        <img src={product.mainImage} alt={product.name} className='object-contain h-full'/>
+        <Image src={product.mainImage} alt={product.name} className='object-contain h-full'/>
       </div>
       <div className="text-center">
         <h1>{product.name}</h1>

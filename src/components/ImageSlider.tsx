@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import { useState } from "react";
 import { ArrowBigLeft, ArrowBigRight } from "lucide-react";
 import "../styles/image-slider.css";
@@ -26,7 +27,7 @@ export function ImageSlider({ imagesUrls }: ImageSliderProps) {
 
   return (
     <div className="bg-black w-full h-full relative">
-      <img src={imagesUrls[imageIndex]} className="img-slider-img " />
+      <Image src={imagesUrls[imageIndex]} alt='slider image' className="img-slider-img " />
       <button className='img-slider-btn' style={{left: 0}} onClick={showNextImage}>
         <ArrowBigLeft />
       </button>
