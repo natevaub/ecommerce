@@ -29,13 +29,14 @@ const Category = () => {
 }
 
 const Navbar = () => {
-  const [windowWidth, setWindowWidth] = useState(0);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   useEffect(() => {
     const handleResize = () => {
       setWindowWidth(window.innerWidth);
     };
     window.addEventListener("resize", handleResize);
+    console.log(windowWidth);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
@@ -53,7 +54,7 @@ const Navbar = () => {
           <div>Sign In</div>
         </div>
       </div>
-     {windowWidth >= 1280 && <Category />} 
+     {windowWidth >= 1280 && <Category />}
     </nav>
   );
 };
