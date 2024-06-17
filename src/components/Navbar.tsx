@@ -1,49 +1,39 @@
 "use client";
 import { Triangle } from "lucide-react";
 import { useState, useEffect } from "react";
+import Link from 'next/link'
 
 const Category = () => {
   return (
       <ul className="bg-red-500 flex justify-center gap-8 h-1/5">
         <li className="flex items-center">
-          Electrics 
+          <Link href='/electric-guitars'>Electrics</Link>
         </li>
         <li className="flex items-center">
-          Acoustic
+          <Link href='/acoustic-guitars'>Acoustics</Link>
         </li>
         <li className="flex items-center">
-          Bass
+          <Link href='/electric-basses'>Basses</Link>
         </li>
         <li className="flex items-center">
-          Amps & Audio
+          <Link href='/amps-audio'>Amps & Audio</Link>
         </li>
         <li className="flex items-center">
-          Accessories
+          <Link href='/accessories'>Accessories</Link>
         </li>
         <li className="flex items-center">
-          Effects Pedals
+          <Link href='/effects-pedals'>Effects Pedals</Link>
         </li>
       </ul>
-
   );
 }
 
 const Navbar = () => {
-  // const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-
-  // useEffect(() => {
-  //   const handleResize = () => {
-  //     setWindowWidth(window.innerWidth);
-  //   };
-  //   window.addEventListener("resize", handleResize);
-  //   console.log(windowWidth);
-  //   return () => window.removeEventListener("resize", handleResize);
-  // }, []);
 
   return (
     <nav className="bg-red-500 sticky top-0 z-[100] bg-white/75 backdrop-blur-lg transition-all h-[10rem] overflow-hidden border-b border-black">
       <div className="h-4/5 bg-blue-500 flex justify-evenly items-center ">
-        <div className='w-[250px] text-center'>Logo</div>
+        <Link className='w-[250px] text-center amplify-font' href="/">Gear Paradise</Link>
         <input
           type="text"
           placeholder="Search"

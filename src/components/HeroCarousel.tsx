@@ -3,8 +3,8 @@ import ImageSlider from "./ImageSlider";
 import "../styles/image-slider.css";
 
 const CAROUSELS_ASSETS = [
-  "/Stratocaster.jpg",
-  "/Squier.jpg"
+  "/Gibson.jpg",
+  "/Telecaster.jpg"
 ];
 
 export default function HeroCarousel() {

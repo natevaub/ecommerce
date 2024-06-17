@@ -14,7 +14,7 @@ export default async function Home() {
 
   return (
     <div>
-      {JSON.stringify(productInfos)}
+      {/* {JSON.stringify(productInfos)} */}
       <section>
         <HeroCarousel />
       </section>
@@ -31,6 +31,14 @@ export default async function Home() {
           />
         </MaxWidthWrapper>
       </section>
+      <section className="bg-grey-400">
+        <MaxWidthWrapper className="flex flex-col h-[calc(100vh-10rem)]">
+          <CollectionSlider
+            title="Featured Collection"
+            products={productInfos}
+          />
+        </MaxWidthWrapper>
+        </section>
     </div>
   );
 }

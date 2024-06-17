@@ -140,7 +140,7 @@ export function ProductCarousel({
         {products.map((product) => (
           <CarouselItem
             key={product.product_id}
-            className="flex-none w-1/2 md:w-1/3"
+            className="flex-none w-1/2 md:w-1/4"
           >
             <DisplayByIdWithImage product={product} />
           </CarouselItem>

@@ -74,3 +74,14 @@
       @apply bg-background text-foreground;
     }
   }
+
+  @font-face {
+    font-family: 'amplify';
+    src: url(/public/fonts/Amplify_PersonalUseOnly.ttf) format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  .amplify-font {
+    font-family: 'amplify', sans-serif;
+  }
