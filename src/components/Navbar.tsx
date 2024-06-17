@@ -29,16 +29,16 @@ const Category = () => {
 }
 
 const Navbar = () => {
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  // const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
-  useEffect(() => {
-    const handleResize = () => {
-      setWindowWidth(window.innerWidth);
-    };
-    window.addEventListener("resize", handleResize);
-    console.log(windowWidth);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  // useEffect(() => {
+  //   const handleResize = () => {
+  //     setWindowWidth(window.innerWidth);
+  //   };
+  //   window.addEventListener("resize", handleResize);
+  //   console.log(windowWidth);
+  //   return () => window.removeEventListener("resize", handleResize);
+  // }, []);
 
   return (
     <nav className="bg-red-500 sticky top-0 z-[100] bg-white/75 backdrop-blur-lg transition-all h-[10rem] overflow-hidden border-b border-black">
@@ -54,7 +54,7 @@ const Navbar = () => {
           <div>Sign In</div>
         </div>
       </div>
-     {windowWidth >= 1280 && <Category />}
+      <Category />
     </nav>
   );
 };

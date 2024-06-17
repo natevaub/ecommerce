@@ -1,9 +1,20 @@
 import { ProductInfo } from "@/types/types";
-import { getAllProducts,  } from "@/actions";
-import { getProductInfo } from "@/actions";
-import Image from "next/image";
+import { getAllProducts } from "@/actions";
+// import { getProductInfo } from "@/actions";
 
-export function DisplayProducts({ products }: { products: Awaited<ReturnType<typeof getAllProducts>>}) {
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+
+export function DisplayProducts({
+  products,
+}: {
+  products: Awaited<ReturnType<typeof getAllProducts>>;
+}) {
   return (
     <div>
       <h1>Fender Telecaster Products</h1>
@@ -21,44 +32,142 @@ export function DisplayProducts({ products }: { products: Awaited<ReturnType<typ
   );
 }
 
-export function ProductDisplayInfo( {title, products}: {title: string, products: Awaited<ReturnType<typeof getAllProducts>>} ) {
+export function ProductDisplayInfo({
+  title,
+  products,
+}: {
+  title: string;
+  products: Awaited<ReturnType<typeof getAllProducts>>;
+}) {
   return (
-    <div className='w-full mt-[3rem] flex-grow overflow-hidden'>
-      <h1 className='uppercase text-4xl'>{title}</h1>
+    <div className="w-full mt-[3rem] flex-grow overflow-hidden">
+      <h1 className="uppercase text-4xl mb-[3rem]">{title}</h1>
       <div>
-        <DisplayProducts products={products}/>
+        <DisplayProducts products={products} />
       </div>
     </div>
   );
 }
 
-
-
-export function DisplayByIdWithImage({ product }: { product: ProductInfo}) {
+export function DisplayByIdWithImage({ product }: { product: ProductInfo }) {
   return (
     <div className="flex flex-col h-[500px] w-[300px] bg-gray-200 items-center gap-[2rem] py-[2rem]">
-      <div className='h-[350px]'>
-        <img src={product.mainImage} alt={product.name} className='object-contain h-full'/>
+      <div className="h-[350px]">
+        <img
+          src={product.mainImage}
+          alt={product.name}
+          className="object-contain h-full"
+        />
       </div>
       <div className="text-center">
         <h1>{product.name}</h1>
         <p>${product.price}</p>
       </div>
-      
     </div>
   );
 }
 
-export function ProductSlider( {title, product}: {title: string, product: ProductInfo} ) {
+export function ProductSlider({
+  title,
+  product,
+}: {
+  title: string;
+  product: ProductInfo;
+}) {
   return (
-    <div className='w-full mt-[3rem] flex-grow'>
-      <h1 className='uppercase text-4xl mb-[3rem]'>{title}</h1>
+    <div className="w-full mt-[3rem] flex-grow">
+      <h1 className="uppercase text-4xl mb-[3rem]">{title}</h1>
       <div>
-        <DisplayByIdWithImage product={product}/>
+        <DisplayByIdWithImage product={product} />
       </div>
     </div>
   );
 }
 
+// <Carousel>
+//   <CarouselContent>
+//     <CarouselItem>...</CarouselItem>
+//     <CarouselItem>...</CarouselItem>
+//     <CarouselItem>...</CarouselItem>
+//   </CarouselContent>
+//   <CarouselPrevious />
+//   <CarouselNext />
+// </Carousel>
+
+// export function CarouselSize() {
+// return (
+// <Carousel
+// opts={{
+// align: "start",
+// }}
+// className="w-full max-w-sm"
+// >
+// <CarouselContent>
+// {Array.from({ length: 5 }).map((_, index) => (
+// <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
+// <div className="p-1">
+// <Card>
+// <CardContent className="flex aspect-square items-center justify-center p-6">
+// <span className="text-3xl font-semibold">{index + 1}</span>
+// </CardContent>
+// </Card>
+// </div>
+// </CarouselItem>
+// ))}
+// </CarouselContent>
+// <CarouselPrevious />
+// <CarouselNext />
+// </Carousel>
+// )
+// }
+
+export function ProductCarousel({
+  products,
+}: {
+  products: Awaited<ReturnType<typeof getAllProducts>>;
+}) {
+  console.log(
+    "Path of images received:",
+    products.map((product) => product.mainImage)
+  );
+  console.log(
+    "ID of images received:",
+    products.map((product) => product.id)
+  );
+  return (
+    <Carousel>
+      <CarouselContent className="flex">
+        {products.map((product) => (
+          <CarouselItem
+            key={product.product_id}
+            className="flex-none w-1/2 md:w-1/3"
+          >
+            <DisplayByIdWithImage product={product} />
+          </CarouselItem>
+        ))}
+      </CarouselContent>
+      <CarouselPrevious />
+      <CarouselNext />
+    </Carousel>
+  );
+}
+
+export function CollectionSlider({
+  title,
+  products,
+}: {
+  title: string;
+  products: Awaited<ReturnType<typeof getAllProducts>>;
+}) {
+  console.log(products);
+  return (
+    <div className="w-full mt-[3rem] flex-grow">
+      <h1 className="uppercase text-4xl mb-[3rem]">{title}</h1>
+      <div>
+        <ProductCarousel products={products} />
+      </div>
+    </div>
+  );
+}
 
 export default ProductSlider;

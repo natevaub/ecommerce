@@ -1,17 +1,20 @@
 import MaxWidthWrapper from "../components/MaxWidthWrapper";
 import HeroCarousel from "../components/HeroCarousel";
 import ProductSlider from "../components/ProductSlider";
-import { ProductDisplayInfo } from "../components/ProductSlider";
-import { getAllProducts, getProductInfo } from "@/actions";
+import {
+  ProductDisplayInfo,
+  ProductCarousel,
+  CollectionSlider,
+} from "../components/ProductSlider";
+import { getAllProducts, getProductInfos } from "@/actions";
 
 export default async function Home() {
   const product = await getAllProducts();
-  const productById = await getProductInfo(1);
-  console.log("Name: ", productById.name, "Price: ", productById.price, "Url: ", productById.mainImage);
+  const productInfos = await getProductInfos();
 
   return (
     <div>
-      {/* { JSON.stringify(product) } */}
+      {JSON.stringify(productInfos)}
       <section>
         <HeroCarousel />
       </section>
@@ -22,7 +25,10 @@ export default async function Home() {
       </section>
       <section className="bg-blue-400">
         <MaxWidthWrapper className="flex flex-col h-[calc(100vh-10rem)]">
-          <ProductSlider title="Featured Products" product={productById} />
+          <CollectionSlider
+            title="Featured Collection"
+            products={productInfos}
+          />
         </MaxWidthWrapper>
       </section>
     </div>

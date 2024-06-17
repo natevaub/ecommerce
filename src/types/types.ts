@@ -14,6 +14,13 @@ export interface Product {
 }
 
 export interface ProductInfo {
+  id: number;
+  name: string;
+  price: number;
+  mainImage: string;
+}
+
+export interface ProductsInfos {
   name: string;
   price: number;
   mainImage: string;
