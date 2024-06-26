@@ -33,7 +33,7 @@ const Navbar = () => {
   return (
     <nav className="bg-red-500 sticky top-0 z-[100] bg-white/75 backdrop-blur-lg transition-all h-[10rem] overflow-hidden border-b border-black">
       <div className="h-4/5 bg-blue-500 flex justify-evenly items-center ">
-        <Link className='w-[250px] text-center amplify-font' href="/">Gear Paradise</Link>
+        <Link className='w-[250px] text-[2.5rem] text-center amplify-font' href="/">Gear Paradise</Link>
         <input
           type="text"
           placeholder="Search"

@@ -1,16 +1,13 @@
 import MaxWidthWrapper from "../components/MaxWidthWrapper";
 import HeroCarousel from "../components/HeroCarousel";
-import ProductSlider from "../components/ProductSlider";
 import {
   ProductDisplayInfo,
-  ProductCarousel,
   CollectionSlider,
 } from "../components/ProductSlider";
-import { getAllProducts, getProductInfos } from "@/actions";
+import { getAllProducts } from "@/actions";
 
 export default async function Home() {
   const product = await getAllProducts();
-  const productInfos = await getProductInfos();
 
   return (
     <div>
@@ -27,7 +24,7 @@ export default async function Home() {
         <MaxWidthWrapper className="flex flex-col h-[calc(100vh-10rem)]">
           <CollectionSlider
             title="Featured Collection"
-            products={productInfos}
+            products={product}
           />
         </MaxWidthWrapper>
       </section>
@@ -35,7 +32,7 @@ export default async function Home() {
         <MaxWidthWrapper className="flex flex-col h-[calc(100vh-10rem)]">
           <CollectionSlider
             title="Featured Collection"
-            products={productInfos}
+            products={product}
           />
         </MaxWidthWrapper>
         </section>

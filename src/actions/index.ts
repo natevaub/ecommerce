@@ -1,11 +1,17 @@
 "use server"
-import { ProductInfo, ProductsInfos } from "@/types/types";
+import { } from "@/types/types";
 
 import openDB from "@/lib/db"
 
+// export async function getAllProducts() {
+//   const db = await openDB();
+//   const products = await db.all('SELECT * FROM products WHERE brand = "Fender" AND model = "Telecaster"');
+//   return products;
+// }
+
 export async function getAllProducts() {
   const db = await openDB();
-  const products = await db.all('SELECT * FROM products WHERE brand = "Fender" AND model = "Telecaster"');
+  const products = await db.all('SELECT * FROM products INNER JOIN images on products.id = images.product_id WHERE images.image_type = "main"');
   return products;
 }
 
@@ -25,16 +31,3 @@ export async function getAllProducts() {
 //     mainImage: mainImage.image_url
 //   };
 // }
-
-export async function getProductInfos(): Promise<ProductInfo[]> {
-  const db = await openDB();
-  const products = await db.all('SELECT id, name, price, image_url FROM products INNER JOIN images ON products.id = images.product_id WHERE products.brand = "Fender" AND products.model = "Telecaster" AND products.collection = "Player Telecaster" AND images.image_type = "main"');
-  const productInfos: ProductInfo[] = products.map((product: any) => ({
-    id: product.id,
-    name: product.name,
-    price: product.price,
-    mainImage: product.image_url
-  }));
-  console.log(productInfos)
-  return productInfos
-}

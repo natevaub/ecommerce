@@ -1,5 +1,5 @@
 export interface Product {
-  product_id: number;
+  id: number;
   name: string;
   description: string;
   category: string;
@@ -11,17 +11,5 @@ export interface Product {
   stock_quantity: number;
   created_at: string; // Assuming timestamp is returned as string
   updated_at: string; // Assuming timestamp is returned as string
-}
-
-export interface ProductInfo {
-  id: number;
-  name: string;
-  price: number;
-  mainImage: string;
-}
-
-export interface ProductsInfos {
-  name: string;
-  price: number;
-  mainImage: string;
+  image_url : string;
 }

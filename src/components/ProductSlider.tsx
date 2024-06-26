@@ -1,5 +1,6 @@
 import { ProductInfo } from "@/types/types";
 import { getAllProducts } from "@/actions";
+import {Product} from "../types/types"
 // import { getProductInfo } from "@/actions";
 
 import {
@@ -49,12 +50,12 @@ export function ProductDisplayInfo({
   );
 }
 
-export function DisplayByIdWithImage({ product }: { product: ProductInfo }) {
+export function DisplayByIdWithImage({ product }: { product: Product }) {
   return (
     <div className="flex flex-col h-[500px] w-[300px] bg-gray-200 items-center gap-[2rem] py-[2rem]">
       <div className="h-[350px]">
         <img
-          src={product.mainImage}
+          src={product.image_url}
           alt={product.name}
           className="object-contain h-full"
         />
@@ -126,14 +127,14 @@ export function ProductCarousel({
 }: {
   products: Awaited<ReturnType<typeof getAllProducts>>;
 }) {
-  console.log(
-    "Path of images received:",
-    products.map((product) => product.mainImage)
-  );
-  console.log(
-    "ID of images received:",
-    products.map((product) => product.id)
-  );
+  // console.log(
+  //   "Path of images received:",
+  //   products.map((product) => product.mainImage)
+  // );
+  // console.log(
+  //   "ID of images received:",
+  //   products.map((product) => product.id)
+  // );
   return (
     <Carousel>
       <CarouselContent className="flex">
@@ -159,13 +160,30 @@ export function CollectionSlider({
   title: string;
   products: Awaited<ReturnType<typeof getAllProducts>>;
 }) {
-  console.log(products);
+  // console.log(products);
   return (
     <div className="w-full mt-[3rem] flex-grow">
       <h1 className="uppercase text-4xl mb-[3rem]">{title}</h1>
       <div>
         <ProductCarousel products={products} />
       </div>
+    </div>
+  );
+}
+
+export function ProductsGrid({
+  products,
+}: {
+  products: Product[];
+}) {
+  for (let product of products) {
+    console.log(product.image_url);
+  }
+  return (
+    <div className="grid grid-cols-4 gap-4">
+      {products.map((product) => (
+        <DisplayByIdWithImage product={product} />
+      ))}
     </div>
   );
 }
