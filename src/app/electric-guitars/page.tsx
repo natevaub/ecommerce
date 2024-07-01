@@ -2,24 +2,89 @@
 import MaxWidthWrapper from "../../components/MaxWidthWrapper";
 import { useState, useEffect } from "react";
 import { ProductsGrid } from "../../components/ProductSlider";
-import { getAllProducts } from "@/actions";
+import {
+  getAllProductsWithMainImage,
+  getAllUniqueModels,
+  getAllUniqueBrands,
+  getAllUniqueSeries,
+} from "@/actions";
+import { FiltersGuitars } from "@/components/Filters";
 import Link from "next/link";
-import { LucideMinus, LucidePlus } from "lucide-react";
+import { Product } from "@/types/types";
+
+interface FilterState {
+  allBrands: string[];
+  activeBrands: string[] | null;
+  allModels: string[];
+  activeModels: string[] | null;
+  allSeries: string[];
+  activeSeries: string[] | null;
+  allColors: string[];
+  activeColor: string | null;
+  allPrices: string[];
+  activePrice: string | null;
+}
 
 export default function Page() {
-  /* Get Products */
-  // const all_products = await getAllProducts();
-  const [isOptionsShown, setIsOptionsShown] = useState(false);
-  const [all_products, setAllProducts] = useState([]);
+  const [defaultView, setDefaultView] = useState<Product[]>([]);
+  const [allFilters, setAllFilters] = useState<FilterState>({
+    allBrands: [],
+    activeBrands: null,
+    allModels: [],
+    activeModels: null,
+    allSeries: [],
+    activeSeries: null,
+    allColors: [],
+    activeColor: null,
+    allPrices: [],
+    activePrice: null,
+  });
 
   useEffect(() => {
     const fetchData = async () => {
-      const products = await getAllProducts();
-      setAllProducts(products);
+      const products = await getAllProductsWithMainImage();
+      setDefaultView(products as Product[]);
+      console.log("Fetched products:", products);
     };
-
     fetchData();
   }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const brands = await getAllUniqueBrands();
+      setAllFilters((prev) => ({ ...prev, allBrands: brands }));
+      console.log("Fetched brands:", brands);
+    };
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const models = await getAllUniqueModels();
+      setAllFilters((prev) => ({ ...prev, allModels: models }));
+      console.log("Fetched models:", models);
+    };
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      console.log('Fetching series...');
+      const series = await getAllUniqueSeries();
+      setAllFilters((prev) => ({ ...prev, allSeries: series }));
+      console.log("Fetched series:", series);
+    };
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    setAllFilters((prev) => ({
+      ...prev,
+      allPrices: ["$0 - $499", "$500 - $999", "$1000 - $1499"],
+    }));
+    console.log("Set allPrices:", ["$0 - $499", "$500 - $999", "$1000 - $1499"]);
+  }, []);
+
 
   return (
     <MaxWidthWrapper className="pt-6 md:px-[12.5rem] inline-block">
@@ -37,133 +102,18 @@ export default function Page() {
           <h1 className="py-5 font-extrabold text-2xl">ELECTRIC GUITARS</h1>
         </div>
         <div className="flex gap-6">
-          <div className="lg:w-[250px]">
-            {/* Filters / Model / Serie / Collor / Price */}
-            <h1 className="uppercase font-bold pb-2">Filters</h1>
-            <ul>
-              <li className="flex justify-between uppercase p-0.5 border-b-2">
-                Model
-                {isOptionsShown ? (
-                  <LucideMinus
-                    onClick={() => setIsOptionsShown(false)}
-                  ></LucideMinus>
-                ) : (
-                  <LucidePlus
-                    onClick={() => setIsOptionsShown(true)}
-                  ></LucidePlus>
-                )}
-              </li>
-              {isOptionsShown && <div>Get Models From DB</div>}
-
-              <li className="uppercase p-0.5 border-b-2">Series</li>
-              <li className="uppercase p-0.5 border-b-2"> Color</li>
-              <li className="uppercase p-0.5 border-b-2">Price</li>
-            </ul>
-          </div>
+          <FiltersGuitars
+            brands={allFilters.allBrands}
+            models={allFilters.allModels}
+            series={allFilters.allSeries}
+            colors={allFilters.allColors}
+            prices={allFilters.allPrices}
+          />
           <div className="flex justify-center">
-            <ProductsGrid products={all_products} />
+            <ProductsGrid products={defaultView} />
           </div>
         </div>
       </div>
     </MaxWidthWrapper>
   );
 }
-
-// export default async function Page() {
-//   /* Get Products */
-//   const [ isOptionsShown, setIsOptionsShown ] = useState(false);
-//   const [ all_products, setAllProducts ] = useState([]);
-
-//   useEffect(() => {
-//     const fetchData = async () => {
-//       const products = await getAllProducts();
-//       setAllProducts(products);
-//     };
-
-//     fetchData();
-//   }, []);
-//   // return (
-//   //   <MaxWidthWrapper className="pt-6 md:px-[15rem] flex inline-block ">
-//   //     <div className='inline-block'>
-//   //     <div>
-//   //       Hello From Electrics Page!
-//   //     </div>
-//   //     <div>Path</div>
-//   //     <div className="flex justify-between">
-//   //       <h1>ELECTRICS</h1>
-
-//   //     </div>
-//   //     <div className='inline-flex'>
-//   //       <div className='lg:w-[200px]'>
-//   //         {/* Filters / Model / Serie / Collor / Price */}
-//   //         <h1>Filters</h1>
-//   //         <ul>
-//   //           <li>
-//   //             Model
-//   //           </li>
-//   //           <li>
-//   //            Series
-//   //           </li>
-//   //           <li>
-//   //            Color
-//   //           </li>
-//   //           <li>
-//   //            Price
-//   //           </li>
-//   //         </ul>
-//   //       </div>
-//   //       </div>
-//   //       <div>
-//   //         GRID
-//   //       </div>
-//   //       <div className="flex justify-center">
-//   //         <ProductsGrid products={all_products} />
-//   //       </div>
-//   //       {/* <div>Sort By:</div> */}
-//   //     </div>
-
-//   //   </MaxWidthWrapper>
-
-//   // );
-//   return (
-//     <MaxWidthWrapper className="pt-6 md:px-[12.5rem] inline-block">
-//       <div className="inline-block w-full">
-//         <div className="flex justify-between w-full">
-//           <div>
-//             <Link href="/">Home</Link> /{" "}
-//             <Link href="/electric-guitars">Electric Guitars</Link>
-//           </div>
-
-//           <div>Sort By:</div>
-//         </div>
-
-//         <div className="flex justify-between">
-//           <h1 className="py-5 font-extrabold text-2xl">ELECTRIC GUITARS</h1>
-//         </div>
-//         <div className="flex gap-6">
-//           <div className="lg:w-[250px]">
-//             {/* Filters / Model / Serie / Collor / Price */}
-//             <h1 className="uppercase font-bold pb-2">Filters</h1>
-//               <ul>
-//                 <li className="flex justify-between uppercase p-0.5 border-b-2">
-//                   Model
-//                   <LucidePlus onClick={() => setIsOptionsShown(true)}></LucidePlus>
-//                   <LucideMinus onClick={() => setIsOptionsShown(false)}></LucideMinus>
-//                 </li>
-//                 {
-//                   isOptionsShown && ( <div>Get Models From DB</div>)
-//                 }
-
-//                 <li className="uppercase p-0.5 border-b-2">Series</li>
-//                 <li className="uppercase p-0.5 border-b-2"> Color</li>
-//                 <li className="uppercase p-0.5 border-b-2">Price</li>
-//               </ul>
-//           </div>
-//           <div className="flex justify-center">
-//             <ProductsGrid products={all_products} />
-//           </div>
-//         </div>
-//       </div>
-//     </MaxWidthWrapper>
-//   );
-// }
