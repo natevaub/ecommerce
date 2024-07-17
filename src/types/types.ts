@@ -13,3 +13,19 @@ export interface Product {
   updated_at: string; // Assuming timestamp is returned as string
   image_url : string;
 }
+
+export interface FilterCategory {
+  allBrands: string[];
+  allModels: string[];
+  allSeries: string[];
+  allColors: string[];
+  allPrices: string[];
+}
+
+export interface FilterQuery {
+  brands: string[];
+  models: string[];
+  series: string[];
+  colors: string[];
+  prices: string[];
+}

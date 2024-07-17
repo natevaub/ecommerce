@@ -46,7 +46,7 @@ export async function getProductsByModel(modelName: string) {
     const productsWithMainImage = await database.all(
       `SELECT * FROM products 
       INNER JOIN images ON products.id = images.product_id 
-      WHERE products.model = ? AND images.images_type = "main"`, 
+      WHERE products.model = ? AND images.image_type = "main"`,
       [modelName]
     );
     //console.log('Database query executed');
@@ -129,5 +129,40 @@ export async function getAllUniqueSeries() {
   } catch (err) {
     console.error('Error executing database query', err);
     return [];
+  }
+}
+
+export async function getFilteredProducts(brands: string[], models: string[], series: string[], prices: string[]) {
+  const database = await openDB();
+
+  let query = 'SELECT * FROM products INNER JOIN images ON products.id = images.product_id WHERE images.image_type = "main"';
+  let params = [];
+
+  if (brands.length > 0) {
+    query += ' AND products.brand IN (' + '?,'.repeat(brands.length).slice(0, -1) + ')';
+    params.push(...brands);
+  }
+
+  if (models.length > 0) {
+    query += ' AND products.model IN (' + '?,'.repeat(models.length).slice(0, -1) + ')';
+    params.push(...models);
+  }
+
+  if (series.length > 0) {
+    query += ' AND products.collection IN (' + '?,'.repeat(series.length).slice(0, -1) + ')';
+    params.push(...series);
+  }
+
+  console.log("get filtered products:");
+  console.log(query);
+  console.log(params);
+
+  try {
+    const filteredProducts = await database.all(query, params);
+
+    // console.log(filteredProducts);
+    return filteredProducts;
+  } catch (err) {
+    console.error('Error executing database query', err);
   }
 }

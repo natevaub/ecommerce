@@ -1,11 +1,16 @@
-✅
+08.07 / 13.07
 
-Populate DB with new Jaguar Items ❌
+Populate DB with new Jaguar Items 
+Player Jaguar ✅ Kurt Cobain Jaguar ✅ Johnny Marr ✅
 
-Populate DB with new Gibson Items ❌
+Populate DB with new Gibson Items
 
-Finish Filter components with actions on DB ❌
+Finish Filter components with actions on DB
+Update the different filters based on current active filters for example if only Jaguar model is selected only displayed the Jaguar series
 
 Add a color column to the database ❌
 
 Implement Authentification ❌
+
+Add 30 new references
+
