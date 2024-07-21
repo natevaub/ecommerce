@@ -14,6 +14,16 @@ export interface Product {
   image_url : string;
 }
 
+export interface Model {
+  name: string;
+  image_url: string;
+}
+
+export interface Category {
+  name: string;
+  image: string;
+}
+
 export interface FilterCategory {
   allBrands: string[];
   allModels: string[];

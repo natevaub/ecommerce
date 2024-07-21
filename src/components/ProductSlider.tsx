@@ -1,5 +1,5 @@
 import { getAllProductsWithMainImage } from "@/actions";
-import { Product } from "../types/types";
+import { Product, Model, Category } from "../types/types";
 
 import {
   Carousel,
@@ -68,9 +68,6 @@ export function CollectionSlider({
 }
 
 export function ProductsGrid({ products }: { products: Product[] }) {
-  for (let product of products) {
-    // console.log("ProductsGrid display:", product.name);
-  }
   return (
     <div className="2xl:grid 2xl:grid-cols-4 gap-4 md:xl:grid md:xl:grid-cols-3 max-xl:grid max-xl:grid-cols-3">
       {products.map((product) => (
@@ -79,3 +76,4 @@ export function ProductsGrid({ products }: { products: Product[] }) {
     </div>
   );
 }
+

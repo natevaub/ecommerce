@@ -1,5 +1,5 @@
 import React from "react";
-import ImageSlider from "./FrontPageImageSlider";
+import ImageSlider from "./FrontPageMainSlider";
 import "../styles/image-slider.css";
 
 const CAROUSELS_ASSETS = [
