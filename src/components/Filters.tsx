@@ -68,7 +68,7 @@ export const FiltersGuitars = ({
       <h1 className="uppercase font-bold pb-2">Filters</h1>
 
       <ul>
-        <li className="flex justify-between uppercase p-0.5 border-b-2 mb-2">
+        <li className="flex justify-between uppercase p-0.5 border-b-2 mb-4">
           Brands
           {isOptionsShown.brands ? (
             <LucideMinus onClick={() => toggleOption("brands")}></LucideMinus>
@@ -93,7 +93,7 @@ export const FiltersGuitars = ({
             </div>
           ))}
 
-        <li className="flex justify-between uppercase p-0.5 border-b-2 mb-2">
+        <li className="flex justify-between uppercase p-0.5 border-b-2 mb-4">
           Models
           {isOptionsShown.models ? (
             <LucideMinus onClick={() => toggleOption("models")}></LucideMinus>
@@ -116,7 +116,7 @@ export const FiltersGuitars = ({
               )}
             </div>
           ))}
-        <li className="flex justify-between uppercase p-0.5 border-b-2 mb-2">
+        <li className="flex justify-between uppercase p-0.5 border-b-2 mb-4">
           Series
           {isOptionsShown.series ? (
             <LucideMinus onClick={() => toggleOption("series")}></LucideMinus>
@@ -140,7 +140,7 @@ export const FiltersGuitars = ({
             </div>
           ))}
         {/* <li className="uppercase p-0.5 border-b-2"> Color</li> */}
-        <li className="flex justify-between uppercase p-0.5 border-b-2 mb-2">
+        <li className="flex justify-between uppercase p-0.5 border-b-2 mb-4">
           Prices
           {isOptionsShown.prices ? (
             <LucideMinus onClick={() => toggleOption("prices")}></LucideMinus>

@@ -84,5 +84,18 @@
     .amplify-font {
       font-family: 'amplify', sans-serif;
     }
+
+    @keyframes slideDown {
+      from {
+        transform: translateY(-100%);
+      }
+      to {
+        transform: translateY(0);
+      } 
+    }
+
+    .slide-down {
+      animation: slideDown 0.5 ease-out forwards;
+    }
   }
 

@@ -34,9 +34,7 @@ export function ImageSlider({ imagesUrls }: ImageSliderProps) {
       <button className='img-slider-btn' style={{right: 0}} onClick={showPreviousImage}>
         <ArrowBigRight />
       </button>
-
       </div>
-      
   );
 }
 

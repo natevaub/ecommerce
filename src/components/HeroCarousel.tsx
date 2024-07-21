@@ -1,10 +1,10 @@
 import React from "react";
-import ImageSlider from "./ImageSlider";
+import ImageSlider from "./FrontPageImageSlider";
 import "../styles/image-slider.css";
 
 const CAROUSELS_ASSETS = [
-  "/Gibson.jpg",
-  "/Telecaster.jpg"
+  "/assets/Gear/Fender-Amps.jpg",
+  "/assets/Gear/Hammertone-Pedals.jpg",
 ];
 
 export default function HeroCarousel() {
