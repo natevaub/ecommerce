@@ -85,6 +85,85 @@
       font-family: 'amplify', sans-serif;
     }
 
+    /* Futura Font */
+    @font-face {
+      font-family: 'FuturaCyrillicBook';
+      src: url('/path/to/FuturaCyrillicBook.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+    
+    @font-face {
+      font-family: 'FuturaCyrillicBold';
+      src: url('/path/to/FuturaCyrillicBold.ttf') format('truetype');
+      font-weight: bold;
+      font-style: normal;
+    }
+    
+    @font-face {
+      font-family: 'FuturaCyrillicDemi';
+      src: url('/path/to/FuturaCyrillicDemi.ttf') format('truetype');
+      font-weight: 600; /* Semi-bold */
+      font-style: normal;
+    }
+    
+    @font-face {
+      font-family: 'FuturaCyrillicExtraBold';
+      src: url('/path/to/FuturaCyrillicExtraBold.ttf') format('truetype');
+      font-weight: 800; /* Extra bold */
+      font-style: normal;
+    }
+    
+    @font-face {
+      font-family: 'FuturaCyrillicHeavy';
+      src: url('/path/to/FuturaCyrillicHeavy.ttf') format('truetype');
+      font-weight: 900; /* Heavy */
+      font-style: normal;
+    }
+    
+    @font-face {
+      font-family: 'FuturaCyrillicLight';
+      src: url('/path/to/FuturaCyrillicLight.ttf') format('truetype');
+      font-weight: 300; /* Light */
+      font-style: normal;
+    }
+    
+    @font-face {
+      font-family: 'FuturaCyrillicMedium';
+      src: url('/path/to/FuturaCyrillicMedium.ttf') format('truetype');
+      font-weight: 500; /* Medium */
+      font-style: normal;
+    }
+
+    .futura-book {
+      font-family: 'FuturaCyrillicBook', sans-serif;
+    }
+    
+    .futura-bold {
+      font-family: 'FuturaCyrillicBold', sans-serif;
+    }
+    
+    .futura-demi {
+      font-family: 'FuturaCyrillicDemi', sans-serif;
+    }
+    
+    .futura-extra-bold {
+      font-family: 'FuturaCyrillicExtraBold', sans-serif;
+    }
+    
+    .futura-heavy {
+      font-family: 'FuturaCyrillicHeavy', sans-serif;
+    }
+    
+    .futura-light {
+      font-family: 'FuturaCyrillicLight', sans-serif;
+    }
+    
+    .futura-medium {
+      font-family: 'FuturaCyrillicMedium', sans-serif;
+    }
+
+
     @keyframes slideDown {
       from {
         transform: translateY(-100%);

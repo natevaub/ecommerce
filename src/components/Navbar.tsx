@@ -5,7 +5,7 @@ import Link from "next/link";
 
 const CategoryLargeScreen = () => {
   return (
-    <ul className="bg-red-500 flex justify-center gap-8 h-1/5 max-xl:hidden">
+    <ul className="flex justify-center gap-8 h-1/5 max-xl:hidden">
       <li className="flex items-center">
         <Link href="/electric-guitars">Electrics</Link>
       </li>
@@ -116,9 +116,9 @@ const Navbar = () => {
   };
 
   return (
-    <div>
-      <nav className="bg-red-500 sticky top-0 z-[100] bg-white/75 backdrop-blur-lg transition-all h-[10rem] overflow-hidden border-b border-black flex-col">
-        <div className="xl:h-4/5 max-xl:h-full bg-blue-500 flex justify-center">
+    <div className="sticky z-[100] top-0">
+      <nav className="top-0 bg-white/75 backdrop-blur-lg transition-all h-[10rem] overflow-hidden border-b border-black flex-col">
+        <div className="xl:h-4/6 max-xl:h-full flex justify-center">
           <div className=" flex justify-between items-center max-w-[100rem] w-full">
             <Link
               className="w-[250px] text-[2.5rem] text-center amplify-font"
@@ -129,7 +129,7 @@ const Navbar = () => {
             <input
               type="text"
               placeholder="Search"
-              className="sm:w-[450px] lg:w-[500px] bg-transparent px-6 py-2 font-medium text-base leading-none tracking-wider text-black rounded-full border border-gray-300 h-12 max-h-12"
+              className="sm:w-[450px] lg:w-[500px] bg-transparent px-6 py-2 font-medium text-base leading-none tracking-wider text-black rounded-full border border-gray-600 h-12 max-h-12"
             />
             <div className="text-center w-[250px] flex justify-center">
               <div>

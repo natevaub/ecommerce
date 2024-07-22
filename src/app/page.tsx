@@ -5,7 +5,7 @@ import {
 } from "../components/ProductSlider";
 import { getAllProductsWithMainImage } from "@/actions";
 import {MODELS_ASSETS} from "../components/Assets";
-import DisplayItem from "../components/FrontPageModelCategory"
+import {DisplayItem, CarouselModelsCategory} from "../components/FrontPageModelCategory"
 
 export default async function Home() {
 
@@ -14,9 +14,11 @@ export default async function Home() {
       <section>
         <HeroCarousel />
       </section>
-      <section className="bg-blue-400">
+      <section className="">
         <MaxWidthWrapper className="flex flex-col h-[calc(100vh-10rem)]">
-        <DisplayItem model={MODELS_ASSETS[0]} />
+        <h2 className="text-[2rem] my-6">TOP MODELS</h2>
+        {/* <DisplayItem model={MODELS_ASSETS[0]} /> */}
+        <CarouselModelsCategory dataList={MODELS_ASSETS} />
         </MaxWidthWrapper>
       </section>
       <section className="bg-grey-400">
