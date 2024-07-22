@@ -3,10 +3,30 @@ import { Menu, ChevronRight, X } from "lucide-react";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
+const HoveredCategory = () => {
+  return (
+    <div className="fixed h-full w-full bg-black bg-opacity-25 z-[100]">
+      <h1>Featured Item</h1>
+      <h1>Shop by Category</h1>
+      <h1>Shop by Model</h1>
+      <h1>Shop by Series</h1>
+    </div>
+  )
+}
+
 const CategoryLargeScreen = () => {
+  const [isHovered, setIsHovered] = useState(false);
+
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+  }
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+  }
+
   return (
     <ul className="flex justify-center gap-8 h-1/5 max-xl:hidden">
-      <li className="flex items-center">
+      <li className="flex items-center" >
         <Link href="/electric-guitars">Electrics</Link>
       </li>
       <li className="flex items-center">
@@ -148,6 +168,7 @@ const Navbar = () => {
           toggleSidebar={toggleSidebar}
         />
       )}
+      {/* <HoveredCategory /> */}
     </div>
   );
 };
