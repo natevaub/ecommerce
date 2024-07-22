@@ -21,7 +21,7 @@ export interface Model {
 
 export interface Category {
   name: string;
-  image: string;
+  image_url: string;
 }
 
 export interface FilterCategory {

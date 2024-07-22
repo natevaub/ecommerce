@@ -40,29 +40,32 @@ function DisplayItem({ data }: { data: Model }) {
           style={zoomStyle}
         />
       </div>
-      <p className="text-lg flex items-center mr-2">{data.name}{isHovered ? <ArrowRight className="transition"/> : ""}</p>
+      <p className="text-lg flex items-center mr-2">
+        {data.name}
+        {isHovered ? <ArrowRight className="transition" /> : ""}
+      </p>
     </div>
   );
 }
 
-function CarouselModelsCategory({dataList} : {dataList: Model[]}) {
+function CarouselModelsCategories({
+  dataList,
+}: {
+  dataList: Model[] | Category[];
+}) {
   return (
     <Carousel className="item-gap-4">
-    <CarouselContent>
-    {
-      dataList?.map((data) => (
-        <CarouselItem key={data.name} className="md:basis-1/2 lg:basis-1/3 mr-[-8rem]">
-          <DisplayItem data={data} />
-        </CarouselItem>
-      ))
-    }
-
-    </CarouselContent>
-    <CarouselPrevious />
-    <CarouselNext />
-
+      <CarouselContent>
+        {dataList?.map((data) => (
+          <CarouselItem key={data.name} className="md:basis-1/2 lg:basis-1/4">
+            <DisplayItem data={data} />
+          </CarouselItem>
+        ))}
+      </CarouselContent>
+      <CarouselPrevious />
+      <CarouselNext />
     </Carousel>
   );
 }
 
-export {DisplayItem, CarouselModelsCategory}
+export { DisplayItem, CarouselModelsCategories };
