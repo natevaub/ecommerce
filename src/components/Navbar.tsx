@@ -2,46 +2,95 @@
 import { Menu, ChevronRight, X } from "lucide-react";
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { CategoryProps } from "../types/types";
+import MaxWidthWrapper from "./MaxWidthWrapper";
 
 const HoveredCategory = () => {
-  return (
-    <div className="fixed h-full w-full bg-black bg-opacity-25 z-[100]">
-      <h1>Featured Item</h1>
-      <h1>Shop by Category</h1>
-      <h1>Shop by Model</h1>
-      <h1>Shop by Series</h1>
+    const [isHovered, setIsHovered] = useState(false);
+
+    const handleOnEnter = () => {
+      setIsHovered(true);
+    }
+
+    const handleOnLeave = () => {
+      setIsHovered(false);
+    }
+
+    return (
+    <div className="fixed h-full w-full bg-black bg-opacity-50 z-[100]">
+      <div className="bg-white h-[25%] flex justify-evenly py-8"
+      onMouseEnter={handleOnEnter}
+      onMouseLeave={handleOnLeave}
+       style={{ boxShadow: '0px 25px 35px -4px rgba(0,0,0,0.49)'}}>
+        <h1>Featured Item</h1>
+        <h1>Shop by Category</h1>
+        <h1>Shop by Model</h1>
+        <h1>Shop by Series</h1>
+      </div>
     </div>
-  )
-}
+  );
+};
 
-const CategoryLargeScreen = () => {
-  const [isHovered, setIsHovered] = useState(false);
+const CategoryLargeScreen: React.FC<CategoryProps> = ({
+  onHover,
+  hoveredCategory,
+}) => {
+  const handleMouseEnter = (category: string) => {
+    onHover(category);
+  };
 
-  const handleMouseEnter = () => {
-    setIsHovered(true);
-  }
   const handleMouseLeave = () => {
-    setIsHovered(false);
-  }
+    onHover("");
+  };
 
   return (
-    <ul className="flex justify-center gap-8 h-1/5 max-xl:hidden">
-      <li className="flex items-center" >
+    <ul className="flex justify-center gap-8 h-2/6 max-xl:hidden">
+      <li
+        className="flex items-center"
+        onMouseEnter={() => handleMouseEnter("Electrics")}
+        onMouseLeave={handleMouseLeave}
+        style={hoveredCategory === "Electrics" ? { color: "red", borderBottom: 'solid red 1px' } : {}}
+      >
         <Link href="/electric-guitars">Electrics</Link>
       </li>
-      <li className="flex items-center">
+      <li
+        className="flex items-center"
+        onMouseEnter={() => handleMouseEnter("Acoustics")}
+        onMouseLeave={handleMouseLeave}
+        style={hoveredCategory === "Acoustics" ? { color: "red", borderBottom: 'solid red 1px' } : {}}
+      >
         <Link href="/acoustic-guitars">Acoustics</Link>
       </li>
-      <li className="flex items-center">
+      <li
+        className="flex items-center"
+        onMouseEnter={() => handleMouseEnter("Basses")}
+        onMouseLeave={handleMouseLeave}
+        style={hoveredCategory === "Basses" ? { color: "red", borderBottom: 'solid red 1px' } : {}}
+      >
         <Link href="/electric-basses">Basses</Link>
       </li>
-      <li className="flex items-center">
+      <li
+        className="flex items-center"
+        onMouseEnter={() => handleMouseEnter("Amps & Audio")}
+        onMouseLeave={handleMouseLeave}
+        style={hoveredCategory === "Amps & Audio" ? { color: "red", borderBottom: 'solid red 1px' } : {}}
+      >
         <Link href="/amps-audio">Amps & Audio</Link>
       </li>
-      <li className="flex items-center">
+      <li
+        className="flex items-center"
+        onMouseEnter={() => handleMouseEnter("Accessories")}
+        onMouseLeave={handleMouseLeave}
+        style={hoveredCategory === "Accessories" ? { color: "red", borderBottom: 'solid red 1px' } : {}}
+      >
         <Link href="/accessories">Accessories</Link>
       </li>
-      <li className="flex items-center">
+      <li
+        className="flex items-center"
+        onMouseEnter={() => handleMouseEnter("Effects Pedals")}
+        onMouseLeave={handleMouseLeave}
+        style={hoveredCategory === "Effects Pedals" ? { color: "red", borderBottom: 'solid red 1px' } : {}}
+      >
         <Link href="/effects-pedals">Effects Pedals</Link>
       </li>
     </ul>
@@ -130,14 +179,19 @@ const NavigationMenuSmallScreen = ({
 
 const Navbar = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [categoryHovered, setCategoryHovered] = useState("");
 
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
   };
 
+  const handleCategoryHover = (category: string) => {
+    setCategoryHovered(category);
+  };
+
   return (
-    <div className="sticky z-[100] top-0">
-      <nav className="top-0 bg-white/75 backdrop-blur-lg transition-all h-[10rem] overflow-hidden border-b border-black flex-col">
+    <div className="sticky z-[100] top-0" style={{ boxShadow: '0px 8px 13px -5px #000000' }}>
+      <nav className="top-0 bg-white/75 backdrop-blur-lg transition-all h-[10rem] overflow-hidden flex-col" style={{ border: '1px solid rgba(0, 0, 0, .1)'}}>
         <div className="xl:h-4/6 max-xl:h-full flex justify-center">
           <div className=" flex justify-between items-center max-w-[100rem] w-full">
             <Link
@@ -159,8 +213,10 @@ const Navbar = () => {
             </div>
           </div>
         </div>
-        <CategoryLargeScreen />
-        
+        <CategoryLargeScreen
+          onHover={handleCategoryHover}
+          hoveredCategory={categoryHovered}
+        />
       </nav>
       {sidebarOpen && (
         <NavigationMenuSmallScreen
@@ -168,7 +224,7 @@ const Navbar = () => {
           toggleSidebar={toggleSidebar}
         />
       )}
-      {/* <HoveredCategory /> */}
+      {categoryHovered !== "" ? <HoveredCategory /> : null} 
     </div>
   );
 };

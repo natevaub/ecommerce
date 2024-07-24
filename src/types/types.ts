@@ -39,3 +39,8 @@ export interface FilterQuery {
   colors: string[];
   prices: string[];
 }
+
+export interface CategoryProps {
+  onHover: (category: string) => void;
+  hoveredCategory: string;
+}
