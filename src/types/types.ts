@@ -43,4 +43,5 @@ export interface FilterQuery {
 export interface CategoryProps {
   onHover: (category: string) => void;
   hoveredCategory: string;
+  onFlyout: (active: boolean) => void;
 }
