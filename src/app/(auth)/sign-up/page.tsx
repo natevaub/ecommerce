@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation"
 import Link from "next/link";
+import { SignUp } from "@/actions/user-management";
 
 const SignUpForm = () => {
   // Corrected function declaration
@@ -12,19 +13,13 @@ const SignUpForm = () => {
 
   const router = useRouter();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const response = await fetch("/api/signup-user/", {
-      method: "POST",
-      body: JSON.stringify({
-        username,
-        email,
-        password,
-        confirmPassword,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
+    const response = await SignUp({
+      username,
+      email,
+      password,
+      confirmPassword,
     });
 
     if (response.ok) {
@@ -60,6 +55,7 @@ const SignUpForm = () => {
             onChange={(e) => setEmail(e.target.value)}
             placeholder=""
             className="border p-2"
+            autoComplete="new-password"
           />
           <label htmlFor="username">Password</label>
           <input
@@ -78,6 +74,7 @@ const SignUpForm = () => {
             onChange={(e) => setConfirmPassword(e.target.value)}
             placeholder=""
             className="border p-2"
+            autoComplete="new-password"
           />
           <button type="submit">Submit</button>
           <Link href="/sign-in">I already have an account</Link>

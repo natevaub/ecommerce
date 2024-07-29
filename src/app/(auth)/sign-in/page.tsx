@@ -12,7 +12,7 @@ const SignUpForm = () => {
 
   const router = useRouter();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const response = await fetch("/api/signup-user/", {
       method: "POST",
