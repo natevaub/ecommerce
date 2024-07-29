@@ -1,4 +1,4 @@
-import MaxWidthWrapper from "../../components/MaxWidthWrapper";
+import MaxWidthWrapper from "../../../components/MaxWidthWrapper";
 import React from "react";
 
 export default async function Page() {

@@ -10,18 +10,11 @@ interface CategoryProps {
   isActive: boolean;
 }
 
-// interface HoverCategoryProps {
-//   onHover: (category: string) => void;
-//   hoveredCategory: string;
-//   onFlyout: (active: boolean) => void;
-//   isActive: boolean;
-// }
-
 const HoveredCategory: React.FC<CategoryProps> = ({
   onHover,
-  hoveredCategory,
+  // hoveredCategory,
   onFlyout,
-  isActive,
+  // isActive,
 }) => {
   const handleMouseEnter = (event: React.MouseEvent) => {
     onFlyout(true);
@@ -33,7 +26,7 @@ const HoveredCategory: React.FC<CategoryProps> = ({
   };
 
   return (
-    <div className="fixed h-full w-full bg-black bg-opacity-50 z-[100]">
+    <div className="fixed h-full w-full bg-black bg-opacity-50 z-[100] font-futura-medium">
       <div
         className="bg-white h-[25%] flex justify-evenly py-8"
         style={{ boxShadow: "0px 25px 35px -4px rgba(0,0,0,0.49)" }}
@@ -69,7 +62,7 @@ const CategoryLargeScreen: React.FC<CategoryProps> = ({
   };
 
   return (
-    <ul className="flex justify-center gap-8 h-2/6 max-xl:hidden">
+    <ul className="flex justify-center gap-8 h-2/6 max-xl:hidden font-futura-medium">
       <li
         className="flex items-center"
         onMouseEnter={() => handleMouseEnter("Electrics")}
@@ -219,7 +212,7 @@ const NavigationMenuSmallScreen = ({
           <ChevronRight />
         </li>
         <li className="flex my-10 border-y border-gray-800 cursor-pointer px-10 py-8 ">
-          Sign in
+          <Link href="/sign-in">Sign in</Link>
         </li>
       </ul>
     </div>
@@ -269,7 +262,9 @@ const Navbar = () => {
               <div>
                 <Menu className="xl:hidden" onClick={toggleSidebar} />
               </div>
-              <div className="hidden xl:block">Sign in</div>
+              <div className="hidden xl:block">
+                <Link href="/sign-up">Sign in</Link>
+                </div>
             </div>
           </div>
         </div>

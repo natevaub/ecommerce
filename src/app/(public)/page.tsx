@@ -1,12 +1,10 @@
-import MaxWidthWrapper from "../components/MaxWidthWrapper";
-import HeroCarousel from "../components/HeroCarousel";
-import { CollectionSlider } from "../components/ProductSlider";
-import { getAllProductsWithMainImage } from "@/actions";
-import { MODELS_ASSETS, CATEGORIES_ASSETS } from "../components/Assets";
+import MaxWidthWrapper from "../../components/MaxWidthWrapper";
+import HeroCarousel from "../../components/HeroCarousel";
+import { CollectionSlider } from "../../components/ProductSlider";
+import { MODELS_ASSETS, CATEGORIES_ASSETS } from "../../components/Assets";
 import {
-  DisplayItem,
   CarouselModelsCategories,
-} from "../components/FrontPageModelCategory";
+} from "../../components/FrontPageModelCategory";
 
 export default async function Home() {
   return (

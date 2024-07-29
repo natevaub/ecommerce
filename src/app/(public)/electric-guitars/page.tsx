@@ -1,8 +1,8 @@
 "use client";
-import MaxWidthWrapper from "../../components/MaxWidthWrapper";
+import MaxWidthWrapper from "../../../components/MaxWidthWrapper";
 import { Loader } from "lucide-react";
 import { useState, useEffect } from "react";
-import { ProductsGrid } from "../../components/ProductSlider";
+import { ProductsGrid } from "../../../components/ProductSlider";
 import {
   getAllProductsWithMainImage,
   getAllUniqueModels,
@@ -14,7 +14,7 @@ import { FiltersGuitars } from "@/components/Filters";
 import Link from "next/link";
 import { Product } from "@/types/types";
 
-import { FilterQuery, FilterCategory } from "../../types/types";
+import { FilterQuery, FilterCategory } from "../../../types/types";
 
 const FlyoutLink = ({ FlyoutContent, sortBy, onSortChange }) => {
   const [open, setOpen] = useState(false);
