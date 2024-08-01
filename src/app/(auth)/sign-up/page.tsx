@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { useRouter } from "next/navigation"
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { SignUp } from "@/actions/user-management";
 
@@ -22,17 +22,10 @@ const SignUpForm = () => {
       confirmPassword,
     });
 
-    if (response.ok) {
-      const data = await response.json();
-      console.log(data);
+    if (response.status === 200) {
       router.push("/sign-in");
-
-    } else {
-      const error = await response.json();
-      console.error(error);
     }
-  }
-
+  };
 
   return (
     <div className="flex w-[100vw] h-[100vh] justify-center items-center">

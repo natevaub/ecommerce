@@ -12,8 +12,6 @@ export async function SignUp(userData : {
 }) {
   const database = await openDB();
   try {
-    // const body = await req.json();
-
     const { email, username, password } = userSchema.parse(userData);
 
     const existingUserByEmail = await database.all(
@@ -25,22 +23,26 @@ export async function SignUp(userData : {
     );
 
     if (existingUserByEmail.length > 0) {
-      return NextResponse.json({user: null, message: "Email already exist", existingUserByEmail}, {status: 409});
+      return {error: "Email already exists", status: 409};
     }
 
     if (existingUserByUsername.length > 0) {
-      return NextResponse.json({user: null, message: "Username already exist"}, {status: 409});
+      return {error: "Username already exists", status: 409};
     }
 
     const hashedPassword = await hash(password, 10);
-    const newUser = await database.all(
+    await database.run(
       `INSERT INTO USERS(email, username, password) VALUES (?, ?, ?)`, email, username, hashedPassword
     );
 
-    return  NextResponse.json({ user: newUser, message: "User created successfully"}, {status: 201});
+    const newUser = await database.get(
+      `SELECT * FROM USERS WHERE email = ?`, email
+    );
+
+    return {user: newUser, message: "User created successfully", status: 200};
   } catch(error) {
     // Handle the error here
     console.error(error);
-    return NextResponse.json({ error: (error as Error).message}, {status: 409});
+    return {error: "Error"}
   }
 }
