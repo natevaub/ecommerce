@@ -25,6 +25,9 @@ const SignUpForm = () => {
     if (response.status === 200) {
       router.push("/sign-in");
     }
+    else {
+      console.log(response);
+    }
   };
 
   return (

@@ -45,3 +45,9 @@ export interface CategoryProps {
   hoveredCategory: string;
   onFlyout: (active: boolean) => void;
 }
+
+export interface User {
+  id: number;
+  email: string;
+  password: string;
+}

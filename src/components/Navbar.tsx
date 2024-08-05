@@ -2,6 +2,8 @@
 import { Menu, ChevronRight, X } from "lucide-react";
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { getMe } from "@/actions/user-management";
+import { set } from "zod";
 
 interface CategoryProps {
   onHover: (category: string) => void;
@@ -219,10 +221,25 @@ const NavigationMenuSmallScreen = ({
   );
 };
 
+interface NavbarProps {
+  token: string | null;
+}
+
 const Navbar = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [categoryHovered, setCategoryHovered] = useState("");
   const [flyoutActive, setFlyoutActive] = useState(false);
+  const [username, setUsername] = useState("");
+
+  useEffect(() => {
+    const awaitedUser = async () => {
+      const user = await getMe();
+      if (user) {
+        setUsername(user.username);
+      }
+    };
+    awaitedUser();
+  }, []);
 
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
@@ -245,7 +262,13 @@ const Navbar = () => {
         className="top-0 bg-white/75 backdrop-blur-lg transition-all h-[10rem] overflow-hidden flex-col"
         style={{ border: "1px solid rgba(0, 0, 0, .1)" }}
       >
-        <div className="xl:h-4/6 max-xl:h-full flex justify-center">
+        <div
+          className="xl:h-4/6 max-xl:h-full flex justify-center"
+          onMouseEnter={() => {
+            handleActiveFlyout(false);
+            handleCategoryHover("");
+          }}
+        >
           <div className=" flex justify-between items-center max-w-[100rem] w-full">
             <Link
               className="w-[250px] text-[2.5rem] text-center amplify-font"
@@ -263,8 +286,12 @@ const Navbar = () => {
                 <Menu className="xl:hidden" onClick={toggleSidebar} />
               </div>
               <div className="hidden xl:block">
-                <Link href="/sign-up">Sign in</Link>
-                </div>
+                {username ? (
+                  <span>Welcome {username}</span>
+                ) : (
+                  <Link href="/sign-up">Sign in</Link>
+                )}
+              </div>
             </div>
           </div>
         </div>
