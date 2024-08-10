@@ -125,6 +125,46 @@ export async function SignIn(userData: {
   }
 }
 
+export async function DeleteSession(sessionId: string) {
+  const database = await openDB();
+
+  try {
+    await database.run(
+      `DELETE FROM SESSIONS WHERE session_id = ?`,
+      sessionId
+    );
+
+  } catch(error) {
+    console.error(error);
+    return {error: "Error"};
+  }
+  
+}
+
+export async function Logout() {
+  console.log("Logout Triggered");
+  try {
+
+    // Get session Id via the cookies
+    console.log("In Logout");
+    const sessionId = cookies().get('session_id')?.value;
+    console.log("Session ID in logout:", sessionId);
+
+    // Invalidate session in database
+    if (sessionId) {
+      await DeleteSession(sessionId);
+    }
+
+    // Clear the cookies
+    cookies().delete('session_id');
+    cookies().delete('token');
+
+  } catch (error) {
+    console.log(error);
+    return { error: "Error" }
+  }
+}
+
 export async function getMe() {
   const cookieStore = cookies();
   const token = cookieStore.get("token")?.value || null;
@@ -142,3 +182,4 @@ export async function getMe() {
   }
   return null;
 }
+

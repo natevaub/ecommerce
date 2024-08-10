@@ -3,7 +3,8 @@ import { Menu, ChevronRight, X } from "lucide-react";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { getMe } from "@/actions/user-management";
-import { set } from "zod";
+import { Button } from "@/components/ui/button";
+import { Logout } from "@/actions/user-management";
 
 interface CategoryProps {
   onHover: (category: string) => void;
@@ -231,10 +232,16 @@ const Navbar = () => {
   const [flyoutActive, setFlyoutActive] = useState(false);
   const [username, setUsername] = useState("");
 
+  const handleLogout = async () => {
+    await Logout();
+    setUsername("");
+  }
+
   useEffect(() => {
     const awaitedUser = async () => {
       const user = await getMe();
       if (user) {
+        console.log("User Ok");
         setUsername(user.username);
       }
     };
@@ -287,9 +294,13 @@ const Navbar = () => {
               </div>
               <div className="hidden xl:block">
                 {username ? (
-                  <span>Welcome {username}</span>
+                  <Button variant="destructive" onClick={handleLogout}>
+                    Logout
+                  </Button>
                 ) : (
-                  <Link href="/sign-up">Sign in</Link>
+                  <Button asChild>
+                    <Link href="/sign-up">Sign in</Link>
+                  </Button>
                 )}
               </div>
             </div>
