@@ -81,7 +81,7 @@ export const FiltersGuitars = ({
           brands.map((brand, index) => (
             <div
               key={index}
-              className="flex justify-between p-0.5 text-sm"
+              className="flex justify-between items-center p-0.5 text-[0.65rem]"
               onClick={() => toggleFilter("brands", brand)}
             >
               {brand}
@@ -105,7 +105,7 @@ export const FiltersGuitars = ({
           models.map((model, index) => (
             <div
               key={index}
-              className="flex justify-between p-0.5 text-sm"
+              className="flex justify-between items-center p-0.5 text-[0.65rem]"
               onClick={() => toggleFilter("models", model)}
             >
               {model}
@@ -128,7 +128,7 @@ export const FiltersGuitars = ({
           series.map((serie, index) => (
             <div
               key={index}
-              className="flex justify-between p-0.5 text-sm"
+              className="flex justify-between items-center p-0.5 text-[0.65rem]"
               onClick={() => toggleFilter("series", serie)}
             >
               {serie}
@@ -152,7 +152,7 @@ export const FiltersGuitars = ({
           prices.map((price, index) => (
             <div
               key={index}
-              className="flex justify-between p-0.5 text-sm"
+              className="flex justify-between items-center p-0.5 text-[0.65rem]"
               onClick={() => toggleFilter("prices", price)}
             >
               {price}
