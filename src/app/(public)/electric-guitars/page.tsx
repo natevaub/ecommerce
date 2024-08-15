@@ -1,6 +1,5 @@
 "use client";
 import MaxWidthWrapper from "../../../components/MaxWidthWrapper";
-import { Loader } from "lucide-react";
 import { useState, useEffect } from "react";
 import { ProductsGrid } from "../../../components/ProductSlider";
 import {

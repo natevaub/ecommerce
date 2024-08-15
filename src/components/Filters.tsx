@@ -64,7 +64,7 @@ export const FiltersGuitars = ({
   }, [activeFilters, setActiveFilters]);
 
   return (
-    <div className="xl:ml-12 sm:ml-10 mb-3">
+    <div className="xl:ml-12 sm:ml-10 mb-3 max-w-[250px]">
       <h1 className="uppercase font-bold pb-2">Filters</h1>
 
       <ul>
