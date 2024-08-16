@@ -1,6 +1,6 @@
 "use client";
 import MaxWidthWrapper from "../../../components/MaxWidthWrapper";
-import { useState, useEffect } from "react";
+import { useState, useEffect, act } from "react";
 import { ProductsGrid } from "../../../components/ProductSlider";
 import {
   getAllProductsWithMainImage,
@@ -8,6 +8,8 @@ import {
   getAllUniqueBrands,
   getAllUniqueSeries,
   getFilteredProducts,
+  getModelsBasedOnActiveFilters,
+  getSeriesBadsedOnActiveFilters,
 } from "@/actions";
 import { FiltersGuitars } from "@/components/Filters";
 import Link from "next/link";
@@ -38,10 +40,11 @@ const FlyoutLink = ({ FlyoutContent, sortBy, onSortChange }) => {
 };
 
 const SortBy = ({ onSortChange }) => {
+  const liStyle = "p-1 hover:bg-gray-200 hover:font-semibold";
   return (
     <ul className="border-2 cursor-pointer">
       <li
-        className="p-1 hover:bg-gray-200 hover:font-semibold"
+        className={liStyle}
         onClick={() => {
           onSortChange("Price Low To High");
         }}
@@ -49,7 +52,7 @@ const SortBy = ({ onSortChange }) => {
         Price Low to High
       </li>
       <li
-        className="p-1 hover:bg-gray-200 hover:font-semibold"
+        className={liStyle}
         onClick={() => {
           onSortChange("Price High To Low");
         }}
@@ -57,7 +60,7 @@ const SortBy = ({ onSortChange }) => {
         Price High to Low
       </li>
       <li
-        className="p-1 hover:bg-gray-200 hover:font-semibold"
+        className={liStyle}
         onClick={() => {
           onSortChange("Alphabetical A - Z");
         }}
@@ -65,7 +68,7 @@ const SortBy = ({ onSortChange }) => {
         Alphabetical A - Z
       </li>
       <li
-        className="p-1 hover:bg-gray-200 hover:font-semibold"
+        className={liStyle}
         onClick={() => {
           onSortChange("Alphabetical Z - A");
         }}
@@ -100,14 +103,9 @@ export default function Page() {
   const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    console.log("Sort By:", sortBy);
-  });
-
-  useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       let products: Product[] | undefined;
-      console.log("Active Filters in Fetch: ", activeFilters);
       if (
         Object.values(activeFilters).every(
           (filterArray) => filterArray.length === 0
@@ -122,11 +120,10 @@ export default function Page() {
           activeFilters.series,
           activeFilters.prices
         );
-        console.log("Fetched Filtered products:", products);
+        
       }
-
-      console.log("Flag");
-      console.log(sortBy);
+      console.log("Active Prices:", activeFilters.prices)
+      console.log("Hello");
 
       if (products) {
           switch (sortBy) {
@@ -166,30 +163,26 @@ export default function Page() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const models = await getAllUniqueModels();
+      // const models = await getAllUniqueModels();
+      const models = await getModelsBasedOnActiveFilters(activeFilters.brands, activeFilters.series);
       setAllFilters((prev) => ({ ...prev, allModels: models }));
     };
     fetchData();
-  }, []);
+  }, [activeFilters]);
 
   useEffect(() => {
     const fetchData = async () => {
-      const series = await getAllUniqueSeries();
+      const series = await getSeriesBadsedOnActiveFilters(activeFilters.brands, activeFilters.models);
       setAllFilters((prev) => ({ ...prev, allSeries: series }));
     };
     fetchData();
-  }, []);
+  }, [activeFilters]);
 
   useEffect(() => {
     setAllFilters((prev) => ({
       ...prev,
       allPrices: ["$0 - $499", "$500 - $999", "$1000 - $1499"],
     }));
-    console.log("Set allPrices:", [
-      "$0 - $499",
-      "$500 - $999",
-      "$1000 - $1499",
-    ]);
   }, []);
   return (
     // <MaxWidthWrapper className="pt-6 px-[12.5rem] inline-block ">

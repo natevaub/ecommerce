@@ -18,6 +18,11 @@ export default function Page() {
   const pathName = usePathname();
   const brand = pathName.split("/")[2];
 
+  if (brand !== "fender" && brand !== "gibson") {
+    Router.push("/url-not-found");
+    return;
+  }
+
   console.log("Brand", brand);
 
   const [allFilters, setAllFilters] = useState<FilterCategory>({
@@ -79,7 +84,7 @@ export default function Page() {
         <div className="flex w-full mb-4">
           <div className="max-md:hidden xl:ml-12 sm:ml-12">
             <Link href="/">Home</Link> /{" "}
-            <Link href="/electric-guitars">Electric Guitars</Link>
+            <Link href="/electric-guitars">Electrics</Link>
           </div>
         </div>
 

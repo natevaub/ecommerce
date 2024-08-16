@@ -108,6 +108,71 @@ export async function getAllUniqueModels() {
   }
 }
 
+export async function getModelsBasedOnActiveFilters(activeBrands: string[], activeSeries: string[]) {
+  console.log("In getModelBasedOnActiveFilters")
+  const database = await openDB();
+  let query = "SELECT DISTINCT model FROM products";
+  let conditions = [];
+  let params = [];
+
+  if (activeBrands.length > 0) {
+    conditions.push('products.brand IN (' + '?,'.repeat(activeBrands.length).slice(0, -1) + ')');
+    console.log('Conditions:', conditions);
+    params.push(...activeBrands);
+  }
+
+  if (activeSeries.length > 0) {
+    conditions.push('products.collection IN (' + '?,'.repeat(activeSeries.length).slice(0, -1) + ')');
+    console.log('Conditions:', conditions);
+    params.push(...activeSeries);
+  }
+
+  if (conditions.length > 0) {
+    query += ' WHERE ' + conditions.join(' AND ');
+  }
+
+  try {
+    const models = await database.all(query, params);
+    console.log(`Query = ${query}`)
+    return models.map((row) => row.model);
+  } catch (err) {
+    console.error('Error executing database query', err);
+    return [];
+  }
+}
+
+export async function getSeriesBadsedOnActiveFilters(activeBrands: string[], activeModels: string[]) {
+  const database = await openDB();
+  console.log("In getSerieBasedOnActiveFilters")
+
+  let query = "SELECT DISTINCT collection FROM products";
+  let conditions = [];
+  let params = [];
+
+  if (activeBrands.length > 0) {
+    conditions.push('products.brand IN (' + '?,'.repeat(activeBrands.length).slice(0, -1) + ')');
+    params.push(...activeBrands);
+  }
+
+  if (activeModels.length > 0) {
+    conditions.push('products.model IN (' + '?,'.repeat(activeModels.length).slice(0, -1) + ')');
+    params.push(...activeModels);
+  }
+
+  if (conditions.length > 0) {
+    query += ' WHERE ' + conditions.join(' AND ');
+  }
+
+  try {
+    const series = await database.all(query, params);
+    console.log(`Query = ${query}`)
+    return series.map((row) => row.collection);
+  } catch (err) {
+    console.error('Error executing database query', err);
+    return [];
+  }
+}
+
 /**
  * Retrieves all unique series from the products table in the database.
  * 
@@ -151,6 +216,10 @@ export async function getFilteredProducts(brands: string[], models: string[], se
   if (series.length > 0) {
     query += ' AND products.collection IN (' + '?,'.repeat(series.length).slice(0, -1) + ')';
     params.push(...series);
+  }
+
+  if (prices.length > 0) {
+    
   }
 
   console.log("get filtered products:");
