@@ -85,7 +85,7 @@ export async function getAllUniqueBrands() {
   }
 }
 
-export async function getBrandsBasedOnActiveFilters(activeModels: string[], activeSeries: string[]) {
+export async function getBrandsBasedOnActiveFilters(activeModels: string[], activeSeries: string[]): Promise<string[]> {
   const database = await openDB();
   let query = "SELECT DISTINCT model FROM products";
   let conditions = [];
@@ -117,7 +117,7 @@ export async function getBrandsBasedOnActiveFilters(activeModels: string[], acti
   }
 }
 
-export async function getModelsBasedOnActiveFilters(activeBrands: string[], activeSeries: string[]) {
+export async function getModelsBasedOnActiveFilters(activeBrands: string[], activeSeries: string[]): Promise<string[]> {
   const database = await openDB();
   let query = "SELECT DISTINCT model FROM products";
   let conditions = [];
@@ -149,7 +149,7 @@ export async function getModelsBasedOnActiveFilters(activeBrands: string[], acti
   }
 }
 
-export async function getSeriesBadsedOnActiveFilters(activeBrands: string[], activeModels: string[]) {
+export async function getSeriesBadsedOnActiveFilters(activeBrands: string[], activeModels: string[]): Promise<string[]> {
   const database = await openDB();
 
   let query = "SELECT DISTINCT collection FROM products";

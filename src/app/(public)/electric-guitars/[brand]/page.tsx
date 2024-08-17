@@ -5,12 +5,6 @@ import Link from "next/link";
 import { FiltersGuitars } from "@/components/Filters";
 import { FilterCategory, FilterQuery, Product } from "../../../../types/types";
 import {
-  getAllProductsWithMainImage,
-  getAllUniqueBrands,
-  getAllUniqueModels,
-  getAllUniqueSeries,
-  getFilteredProducts,
-  getProductsByModel,
 } from "@/actions";
 
 export default function Page() {
@@ -41,41 +35,7 @@ export default function Page() {
     prices: [],
   });
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const brands = await getAllUniqueBrands();
-      setAllFilters((prev) => ({ ...prev, allBrands: brands }));
-    };
-    fetchData();
-  }, []);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const models = await getAllUniqueModels();
-      setAllFilters((prev) => ({ ...prev, allModels: models }));
-    };
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const series = await getAllUniqueSeries();
-      setAllFilters((prev) => ({ ...prev, allSeries: series }));
-    };
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-    setAllFilters((prev) => ({
-      ...prev,
-      allPrices: ["$0 - $499", "$500 - $999", "$1000 - $1499"],
-    }));
-    console.log("Set allPrices:", [
-      "$0 - $499",
-      "$500 - $999",
-      "$1000 - $1499",
-    ]);
-  }, []);
 
   return (
     // <MaxWidthWrapper className="pt-6 px-[12.5rem] inline-block ">
@@ -102,11 +62,6 @@ export default function Page() {
               setActiveFilters={setActiveFilters}
               activeFilters={activeFilters}
             />
-            {/* <FlyoutLink 
-              FlyoutContent={SortBy}
-              sortBy={sortBy}
-              onSortChange={setSortBy}
-            ></FlyoutLink> */}
           </div>
         </div>
       </div>

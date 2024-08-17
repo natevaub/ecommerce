@@ -1,6 +1,5 @@
 "use client";
-import MaxWidthWrapper from "../../../components/MaxWidthWrapper";
-import { useState, useEffect, act } from "react";
+import { useState, useEffect } from "react";
 import { ProductsGrid } from "../../../components/ProductSlider";
 import {
   getAllProductsWithMainImage,
@@ -9,73 +8,12 @@ import {
   getModelsBasedOnActiveFilters,
   getSeriesBadsedOnActiveFilters,
 } from "@/actions";
+import { FlyoutLink, SortBy } from "@/components/SortBy";
 import { FiltersGuitars } from "@/components/Filters";
 import Link from "next/link";
 import { Product } from "@/types/types";
 
 import { FilterQuery, FilterCategory } from "../../../types/types";
-
-const FlyoutLink = ({ FlyoutContent, sortBy, onSortChange }) => {
-  const [open, setOpen] = useState(false);
-
-  const showFlyout = open && FlyoutContent;
-
-  return (
-    <div
-      onMouseEnter={() => setOpen(true)}
-      onMouseLeave={() => setOpen(false)}
-      className="group relative h-fit xl:ml-12 sm:ml-10"
-    >
-      <h1 className="uppercase font-bold pb-2 text-sm cursor-pointer">
-        Sort By :{" "}
-        <span className="text-red-400 transition duration-150">
-          {sortBy || "Please select one"}
-        </span>
-      </h1>
-      {showFlyout && <FlyoutContent onSortChange={onSortChange} />}
-    </div>
-  );
-};
-
-const SortBy = ({ onSortChange }) => {
-  const liStyle = "p-1 hover:bg-gray-200 hover:font-semibold";
-  return (
-    <ul className="border-2 cursor-pointer">
-      <li
-        className={liStyle}
-        onClick={() => {
-          onSortChange("Price Low To High");
-        }}
-      >
-        Price Low to High
-      </li>
-      <li
-        className={liStyle}
-        onClick={() => {
-          onSortChange("Price High To Low");
-        }}
-      >
-        Price High to Low
-      </li>
-      <li
-        className={liStyle}
-        onClick={() => {
-          onSortChange("Alphabetical A - Z");
-        }}
-      >
-        Alphabetical A - Z
-      </li>
-      <li
-        className={liStyle}
-        onClick={() => {
-          onSortChange("Alphabetical Z - A");
-        }}
-      >
-        Alphabetical Z - A
-      </li>
-    </ul>
-  );
-};
 
 export default function Page() {
   const [defaultView, setDefaultView] = useState<Product[]>([]);
@@ -110,7 +48,6 @@ export default function Page() {
         )
       ) {
         products = await getAllProductsWithMainImage();
-        console.log("Fetched all products:", products);
       } else {
         products = await getFilteredProducts(
           activeFilters.brands,
@@ -118,28 +55,25 @@ export default function Page() {
           activeFilters.series,
           activeFilters.prices
         );
-        
       }
-      console.log("Active Prices:", activeFilters.prices)
-      console.log("Hello");
 
       if (products) {
-          switch (sortBy) {
-            case "Price Low To High":
-              products.sort((a, b) => a.price - b.price);
-              break;
-            case "Price High To Low":
-              products.sort((a, b) => b.price - a.price);
-              break;
-            case "Alphabetical A - Z":
-              products.sort((a, b) => a.name.localeCompare(b.name));
-              break;
-            case "Alphabetical Z - A":
-              products.sort((a, b) => b.name.localeCompare(a.name));
-              break;
-            default:
-              break;
-          }
+        switch (sortBy) {
+          case "Price Low To High":
+            products.sort((a, b) => a.price - b.price);
+            break;
+          case "Price High To Low":
+            products.sort((a, b) => b.price - a.price);
+            break;
+          case "Alphabetical A - Z":
+            products.sort((a, b) => a.name.localeCompare(b.name));
+            break;
+          case "Alphabetical Z - A":
+            products.sort((a, b) => b.name.localeCompare(a.name));
+            break;
+          default:
+            break;
+        }
       }
 
       // Add a delay before setting the state
@@ -151,29 +85,30 @@ export default function Page() {
     fetchData();
   }, [activeFilters, sortBy]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const brands = await getBrandsBasedOnActiveFilters(activeFilters.models, activeFilters.series);
-      setAllFilters((prev) => ({ ...prev, allBrands: brands }));
-    };
-    fetchData();
-  }, [activeFilters]);
+  const fetchAndSetFilter = async (filterKey: string, fetchFunc: (...args: any) => Promise<string[]>, ...fetchArgs: any[]) => {
+    const data = await fetchFunc(...fetchArgs);
+    setAllFilters((prev) => ({ ...prev, [filterKey]: data }));
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      // const models = await getAllUniqueModels();
-      const models = await getModelsBasedOnActiveFilters(activeFilters.brands, activeFilters.series);
-      setAllFilters((prev) => ({ ...prev, allModels: models }));
-    };
-    fetchData();
-  }, [activeFilters]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const series = await getSeriesBadsedOnActiveFilters(activeFilters.brands, activeFilters.models);
-      setAllFilters((prev) => ({ ...prev, allSeries: series }));
-    };
-    fetchData();
+    fetchAndSetFilter(
+      "allBrands",
+      getBrandsBasedOnActiveFilters,
+      activeFilters.models,
+      activeFilters.series
+    );
+    fetchAndSetFilter(
+      "allModels",
+      getModelsBasedOnActiveFilters,
+      activeFilters.brands,
+      activeFilters.series
+    );
+    fetchAndSetFilter(
+      "allSeries",
+      getSeriesBadsedOnActiveFilters,
+      activeFilters.brands,
+      activeFilters.models
+    );
   }, [activeFilters]);
 
   useEffect(() => {
@@ -212,7 +147,7 @@ export default function Page() {
               FlyoutContent={SortBy}
               sortBy={sortBy}
               onSortChange={setSortBy}
-            ></FlyoutLink>
+            />
           </div>
           <div
             className={`flex items-start md:xl:ml-[5rem] md:lg:ml-[3.5rem] ${
