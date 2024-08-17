@@ -4,10 +4,8 @@ import { useState, useEffect, act } from "react";
 import { ProductsGrid } from "../../../components/ProductSlider";
 import {
   getAllProductsWithMainImage,
-  getAllUniqueModels,
-  getAllUniqueBrands,
-  getAllUniqueSeries,
   getFilteredProducts,
+  getBrandsBasedOnActiveFilters,
   getModelsBasedOnActiveFilters,
   getSeriesBadsedOnActiveFilters,
 } from "@/actions";
@@ -155,11 +153,11 @@ export default function Page() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const brands = await getAllUniqueBrands();
+      const brands = await getBrandsBasedOnActiveFilters(activeFilters.models, activeFilters.series);
       setAllFilters((prev) => ({ ...prev, allBrands: brands }));
     };
     fetchData();
-  }, []);
+  }, [activeFilters]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -184,6 +182,7 @@ export default function Page() {
       allPrices: ["$0 - $499", "$500 - $999", "$1000 - $1499"],
     }));
   }, []);
+
   return (
     // <MaxWidthWrapper className="pt-6 px-[12.5rem] inline-block ">
     <div className="flex justify-center pt-6">

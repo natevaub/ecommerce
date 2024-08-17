@@ -14,4 +14,26 @@ export const userSchema = z.object({
   message: "Password do not match",
 });
 
-export default userSchema;
+export function parsedPricesRanges(priceRanges: string[]) {
+  // let lowBounds = priceRanges.map(priceRange => {
+  //   let [lowBound] = priceRange.replace('/\$/g', '').split(' - ').map(Number);
+  //   return lowBound;
+  // })
+
+  // let highBounds = priceRanges.map(priceRange => {
+  //   let [, highBound] = priceRange.replace('/\$/g', '').split(' - ').map(Number);
+  //   return highBound;
+  // })
+
+  // return {lowBounds, highBounds};
+
+  let bounds = priceRanges.map(priceRange => {
+    let [lowBound, highBound] = priceRange.replace(/\$/g, '').split(' - ').map(Number);
+    return {lowBound, highBound};
+  })
+
+  let lowBounds = bounds.map(bound => bound.lowBound);
+  let highBounds = bounds.map(bound => bound.highBound);
+
+  return {lowBounds, highBounds};
+}

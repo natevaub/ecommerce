@@ -1,5 +1,6 @@
 "use server"
 import { } from "@/types/types";
+import { parsedPricesRanges } from "./utils";
 
 import openDB from "@/lib/db"
 
@@ -84,24 +85,32 @@ export async function getAllUniqueBrands() {
   }
 }
 
-/**
- * Retrieves all unique models from the products table in the database.
- * 
- * @returns A promise that resolves to an array of unique models. Each model is a string.
- * @throws Will throw an error if the database query fails.
- */
-export async function getAllUniqueModels() {
-  //console.log('Retrieving all unique models');
+export async function getBrandsBasedOnActiveFilters(activeModels: string[], activeSeries: string[]) {
   const database = await openDB();
+  let query = "SELECT DISTINCT model FROM products";
+  let conditions = [];
+  let params = [];
+
+  if (activeModels.length > 0) {
+    conditions.push('products.brand IN (' + '?,'.repeat(activeModels.length).slice(0, -1) + ')');
+    console.log('Conditions:', conditions);
+    params.push(...activeModels);
+  }
+
+  if (activeSeries.length > 0) {
+    conditions.push('products.collection IN (' + '?,'.repeat(activeSeries.length).slice(0, -1) + ')');
+    console.log('Conditions:', conditions);
+    params.push(...activeSeries);
+  }
+
+  if (conditions.length > 0) {
+    query += ' WHERE ' + conditions.join(' AND ');
+  }
 
   try {
-    const models = await database.all(`SELECT DISTINCT model FROM products`);
-    //console.log('Database query executed');
-
-    //console.log(models); // log the result to see if it's what you expect
-
-    return models.map((row) => row.model); // return an array of model strings
-
+    const models = await database.all(query, params);
+    console.log(`Query = ${query}`)
+    return models.map((row) => row.model);
   } catch (err) {
     console.error('Error executing database query', err);
     return [];
@@ -109,7 +118,6 @@ export async function getAllUniqueModels() {
 }
 
 export async function getModelsBasedOnActiveFilters(activeBrands: string[], activeSeries: string[]) {
-  console.log("In getModelBasedOnActiveFilters")
   const database = await openDB();
   let query = "SELECT DISTINCT model FROM products";
   let conditions = [];
@@ -143,7 +151,6 @@ export async function getModelsBasedOnActiveFilters(activeBrands: string[], acti
 
 export async function getSeriesBadsedOnActiveFilters(activeBrands: string[], activeModels: string[]) {
   const database = await openDB();
-  console.log("In getSerieBasedOnActiveFilters")
 
   let query = "SELECT DISTINCT collection FROM products";
   let conditions = [];
@@ -173,30 +180,6 @@ export async function getSeriesBadsedOnActiveFilters(activeBrands: string[], act
   }
 }
 
-/**
- * Retrieves all unique series from the products table in the database.
- * 
- * @returns A promise that resolves to an array of unique series. Each series is a string.
- * @throws Will throw an error if the database query fails.
- */
-export async function getAllUniqueSeries() {
-  //console.log('Retrieving all unique collection');
-  const database = await openDB();
-
-  try {
-    const collection = await database.all(`SELECT DISTINCT collection FROM products`);
-    //console.log('Database query executed');
-
-    console.log(collection); // log the result to see if it's what you expect
-
-    return collection.map((row) => row.collection); // return an array of series strings
-
-  } catch (err) {
-    console.error('Error executing database query', err);
-    return [];
-  }
-}
-
 export async function getFilteredProducts(brands: string[], models: string[], series: string[], prices: string[]) {
   const database = await openDB();
 
@@ -218,11 +201,19 @@ export async function getFilteredProducts(brands: string[], models: string[], se
     params.push(...series);
   }
 
+  console.log(`Price Ranges: ${prices}`);
+  console.log(`Parsed Price Ranges: ${JSON.stringify(parsedPricesRanges(prices))}`);
+  // console.log(`Prices Ranges = ${prices} \n Parsed Prices Ranges : ${JSON.stringify(parsedPricesRanges(prices))}`);
   if (prices.length > 0) {
-    
+    let priceConditions = parsedPricesRanges(prices).lowBounds.map((lowBound, index) => {
+      let highBound = parsedPricesRanges(prices).highBounds[index];
+      console.log(`Low Bound ${lowBound}, High Bound ${highBound}`)
+      params.push(lowBound, highBound);
+      return `(products.price BETWEEN ? AND ?)`;
+    });
+    query += ' AND (' + priceConditions.join(' OR ') + ')';
   }
 
-  console.log("get filtered products:");
   console.log(query);
   console.log(params);
 
